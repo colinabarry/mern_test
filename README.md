@@ -26,6 +26,7 @@ Based on [this video tutorial](https://www.youtube.com/watch?v=sxfnT36v7Uk&t=11s
 - [GitLens](https://www.gitkraken.com/gitlens?utm_source=gitlens-extension&utm_medium=in-app-links&utm_campaign=gitlens-logo-links)
 - [Prettier](https://prettier.io/)
 - [ErrorLens](https://github.com/usernamehw/vscode-error-lens)
+- [package-json-to-readme](https://github.com/zeke/package-json-to-readme)
 
 # Dependencies
 
