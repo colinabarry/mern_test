@@ -8,7 +8,11 @@ const app = express();
 const PORT = 4000;
 
 const httpServ = http.createServer(app);
-const io = new Server(httpServ);
+const io = new Server(httpServ, {
+  cors: {
+    origin: ["http://localhost:3000"],
+  },
+});
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -18,7 +22,9 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connection is ready");
+  socket.on("send-message", (data) => {
+    socket.emit("message-from-server", data);
+  });
 });
 
 httpServ.listen(PORT, () => {
