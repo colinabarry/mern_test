@@ -23,7 +23,14 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
-    socket.emit("message-from-server", data);
+    socket.broadcast.emit("message-from-server", data);
+  });
+
+  socket.on("disconnect", (socket) => {
+    console.log("User left.");
+    // socket.on("send-message", (data) => {
+    //   socket.emit("message-from-server", data);
+    // });
   });
 });
 
