@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import SvgIcon from "@mui/material/SvgIcon";
+import { InputLabel } from "@mui/material";
 
 function SendIcon(props) {
   return (
@@ -21,6 +22,7 @@ export default function ChatWindow() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
+  const [typing, setTyping] = useState(false);
 
   useEffect(() => {
     setSocket(io("http://localhost:4000"));
@@ -32,6 +34,10 @@ export default function ChatWindow() {
     socket.on("message-from-server", (data) => {
       setChat((prev) => [...prev, { message: data.message, recieved: true }]);
     });
+
+    socket.on("typing-started-from-server", () => setTyping(true));
+
+    socket.on("typing-stopped-from-server", () => setTyping(false));
   }, [socket]);
 
   function handleForm(e) {
@@ -41,7 +47,22 @@ export default function ChatWindow() {
     setMessage("");
   }
 
-  function handleInput(e) {}
+  const [typingTimeout, setTypingTimeout] = useState(null);
+
+  function handleInput(e) {
+    setMessage(e.target.value);
+    socket.emit("typing-started");
+
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+
+    setTypingTimeout(
+      setTimeout(() => {
+        socket.emit("typing-stopped");
+      }, 1000)
+    );
+  }
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -64,18 +85,23 @@ export default function ChatWindow() {
             </Typography>
           ))}
         </Box>
-        <Box component="form" onSubmit={handleForm} sx={{}}>
+        <Box component="form" onSubmit={handleForm}>
+          {typing && (
+            <InputLabel sx={{ color: "white" }} shrink htmlFor="message-input">
+              Typing...
+            </InputLabel>
+          )}
           <TextField
             sx={{
               backgroundColor: "white",
               borderRadius: 1,
             }}
             fullWidth
-            id="outlined-adornment-password"
+            id="message-input"
             value={message}
             variant="outlined"
             placeholder="Write your message"
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={handleInput}
             InputProps={{
               "aria-label": "Write your message",
               endAdornment: (
