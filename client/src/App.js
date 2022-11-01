@@ -1,15 +1,24 @@
+import { Box } from "@mui/material";
 import Container from "@mui/material/Container";
-import ChatWindow from "./components/ChatWindow";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
-import { Typography } from "@mui/material";
+import { io } from "socket.io-client";
+import Header from "./components/Header";
 
 function App() {
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:4000"));
+  }, []);
+
   return (
     <div>
       <Container>
-        <Header />
-        <Outlet />
+        <Header socket={socket} />
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Outlet context={{ socket }} />
+        </Box>
       </Container>
     </div>
   );

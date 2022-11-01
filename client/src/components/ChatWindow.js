@@ -1,14 +1,13 @@
-import React from "react";
+import { InputLabel } from "@mui/material";
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import SvgIcon from "@mui/material/SvgIcon";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-import SvgIcon from "@mui/material/SvgIcon";
-import { InputLabel } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useOutletContext, useParams } from "react-router-dom";
 
 function SendIcon(props) {
   return (
@@ -19,14 +18,11 @@ function SendIcon(props) {
 }
 
 export default function ChatWindow() {
-  const [socket, setSocket] = useState(null);
+  const { socket } = useOutletContext();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [typing, setTyping] = useState(false);
-
-  useEffect(() => {
-    setSocket(io("http://localhost:4000"));
-  }, []);
+  const { roomId } = useParams();
 
   useEffect(() => {
     if (!socket) return;
@@ -42,7 +38,7 @@ export default function ChatWindow() {
 
   function handleForm(e) {
     e.preventDefault();
-    socket.emit("send-message", { message });
+    socket.emit("send-message", { message, roomId });
     setChat((prev) => [...prev, { message, recieved: false }]);
     setMessage("");
   }
@@ -51,7 +47,7 @@ export default function ChatWindow() {
 
   function handleInput(e) {
     setMessage(e.target.value);
-    socket.emit("typing-started");
+    socket.emit("typing-started", { roomId });
 
     if (typingTimeout) {
       clearTimeout(typingTimeout);
@@ -59,62 +55,61 @@ export default function ChatWindow() {
 
     setTypingTimeout(
       setTimeout(() => {
-        socket.emit("typing-stopped");
+        socket.emit("typing-stopped", { roomId });
       }, 1000)
     );
   }
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Card
-        sx={{
-          padding: 2,
-          marginTop: 10,
-          width: "75%",
-          backgroundColor: "gray",
-          //   borderRadius: 4,
-        }}
-      >
-        <Box sx={{ marginBottom: 5 }}>
-          {chat.map((data) => (
-            <Typography
-              sx={{ textAlign: data.recieved ? "left" : "right" }}
-              key={data.message}
-            >
-              {data.message}
-            </Typography>
-          ))}
-        </Box>
-        <Box component="form" onSubmit={handleForm}>
-          {typing && (
-            <InputLabel sx={{ color: "white" }} shrink htmlFor="message-input">
-              Typing...
-            </InputLabel>
-          )}
-          <TextField
-            sx={{
-              backgroundColor: "white",
-              borderRadius: 1,
-            }}
-            fullWidth
-            id="message-input"
-            value={message}
-            variant="outlined"
-            placeholder="Write your message"
-            onChange={handleInput}
-            InputProps={{
-              "aria-label": "Write your message",
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton title="IconButton" type="submit" edge="end">
-                    <SendIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
-      </Card>
-    </Box>
+    <Card
+      sx={{
+        padding: 2,
+        marginTop: 10,
+        width: "75%",
+        backgroundColor: "gray",
+        //   borderRadius: 4,
+      }}
+    >
+      {roomId && <Typography>Room: {roomId}</Typography>}
+      <Box sx={{ marginBottom: 5 }}>
+        {chat.map((data) => (
+          <Typography
+            sx={{ textAlign: data.recieved ? "left" : "right" }}
+            key={data.message}
+          >
+            {data.message}
+          </Typography>
+        ))}
+      </Box>
+      <Box component="form" onSubmit={handleForm}>
+        {typing && (
+          <InputLabel sx={{ color: "white" }} shrink htmlFor="message-input">
+            Typing...
+          </InputLabel>
+        )}
+        <TextField
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 1,
+          }}
+          fullWidth
+          id="message-input"
+          value={message}
+          variant="outlined"
+          placeholder="Write your message"
+          onChange={handleInput}
+          InputProps={{
+            "aria-label": "Write your message",
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton title="IconButton" type="submit" edge="end">
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+    </Card>
   );
 }
