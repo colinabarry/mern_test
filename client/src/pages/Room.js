@@ -15,8 +15,8 @@ export default function Room() {
   }, [socket]);
 
   return (
-    <div>
-      <ChatWindow />
-    </div>
+    // <div>
+    <ChatWindow />
+    // </div>
   );
 }
