@@ -27,7 +27,6 @@ function ListCard(props) {
             fullWidth
             variant="standard"
             multiline
-            maxRows={1}
             placeholder="Card title"
             sx={{ backgroundColor: "transparent", padding: 0 }}
           ></TextField>
