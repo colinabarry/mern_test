@@ -14,9 +14,13 @@ function App() {
 
   return (
     <div>
-      <Container>
+      <Container
+        maxWidth={false}
+        disableGutters
+        sx={{ backgroundColor: "transparent" }}
+      >
         <Header socket={socket} />
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ backgroundColor: "transparent" }}>
           <Outlet context={{ socket }} />
         </Box>
       </Container>

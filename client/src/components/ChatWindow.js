@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
+import ChatMessage from "./ChatMessage";
 
 function SendIcon(props) {
   return (
@@ -64,33 +65,70 @@ export default function ChatWindow() {
     <Card
       sx={{
         padding: 2,
-        marginTop: 10,
-        width: "75%",
-        backgroundColor: "gray",
-        //   borderRadius: 4,
+        height: "100%",
+        backgroundColor: "#414141",
+        borderColor: "transparent",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: 4,
+        boxShadow: 4,
       }}
     >
-      {roomId && <Typography>Room: {roomId}</Typography>}
-      <Box sx={{ marginBottom: 5 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          // marginBottom: 4,
+          justifyContent: "flex-start",
+          flexGrow: 1,
+        }}
+      >
         {chat.map((data) => (
-          <Typography
-            sx={{ textAlign: data.recieved ? "left" : "right" }}
-            key={data.message}
-          >
-            {data.message}
-          </Typography>
+          <ChatMessage data={data} />
+          // <Typography
+          //   sx={{ textAlign: data.recieved ? "left" : "right" }}
+          //   key={data.message}
+          // >
+          //   <Card
+          //     onClick={() => {
+          //       setVisible((prev) => !prev);
+          //     }}
+          //     sx={{
+          //       margin: 0.5,
+          //       padding: 0.75,
+          //       backgroundColor: data.recieved ? "powderblue" : "lightgray",
+          //       marginLeft: data.recieved ? 0 : 8,
+          //       marginRight: data.recieved ? 8 : 0,
+          //       borderRadius: 2,
+          //     }}
+          //   >
+          //     {data.message}
+          //   </Card>
+          // </Typography>
         ))}
       </Box>
-      <Box component="form" onSubmit={handleForm}>
+
+      <Box
+        component="form"
+        onSubmit={handleForm}
+        sx={{ justifyContent: "flex-end" }}
+      >
         {typing && (
-          <InputLabel sx={{ color: "white" }} shrink htmlFor="message-input">
+          <InputLabel
+            sx={{
+              color: "lightgray",
+              fontWeight: "bold",
+            }}
+            shrink
+            htmlFor="message-input"
+          >
             Typing...
           </InputLabel>
         )}
         <TextField
           sx={{
-            backgroundColor: "white",
-            borderRadius: 1,
+            backgroundColor: "lightgray",
+            borderRadius: 2,
           }}
           fullWidth
           id="message-input"
