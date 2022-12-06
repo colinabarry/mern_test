@@ -12,20 +12,7 @@ function App() {
     setSocket(io("http://localhost:4000"));
   }, []);
 
-  return (
-    <div>
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{ backgroundColor: "transparent" }}
-      >
-        <Header socket={socket} />
-        <Box sx={{ backgroundColor: "transparent" }}>
-          <Outlet context={{ socket }} />
-        </Box>
-      </Container>
-    </div>
-  );
+  return <Outlet context={{ socket }} />;
 }
 
 export default App;
