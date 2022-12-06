@@ -31,6 +31,10 @@ export default function Room() {
         style={{
           background: "green",
           width: `calc(100% - var(--aside-width))`,
+          display: "flex",
+          flexDirection: "row",
+          overflowX: "auto",
+          overflowY: "auto",
         }}
       >
         {lists}

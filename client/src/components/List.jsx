@@ -13,16 +13,20 @@ function List() {
   }
 
   return (
-    <div>
+    <div
+      className="list"
+      style={{
+        height: "min-content",
+        maxHeight: "100%",
+        minWidth: "min-content",
+        overflowY: "auto",
+        marginLeft: "0.1rem",
+        marginRight: "0.1rem",
+        marginTop: "0.5rem",
+        marginBottom: "0.5rem",
+      }}
+    >
       {visible && (
-        // <Container
-        //   sx={{
-        //     height: "110%",
-        //     display: "flex",
-        //     flexDirection: "row",
-        //     overflowY: "auto",
-        //   }}
-        // >
         <Card
           onClick={(e) => {
             if (e.detail == 2) setVisible((prev) => !prev);
