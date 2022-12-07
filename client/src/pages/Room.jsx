@@ -2,16 +2,11 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import ChatWindow from "../components/ChatWindow";
-import List from "../components/List";
+import Kanban from "../components/Kanban";
 
 export default function Room() {
   const params = useParams();
   const { socket } = useOutletContext();
-  const [lists, addList] = useState([]);
-
-  function createList() {
-    addList((prev) => [...prev, <List />]);
-  }
 
   useEffect(() => {
     if (!socket) return;
@@ -37,14 +32,13 @@ export default function Room() {
           overflowY: "auto",
         }}
       >
-        {lists}
-        <Button onClick={createList}>New List</Button>
+        <Kanban />
       </section>
       <aside
         style={{
           background: "blue",
           width: `var(--aside-width)`,
-          borderRadius: "1rem",
+          borderRadius: "0.5rem",
         }}
       >
         <ChatWindow />

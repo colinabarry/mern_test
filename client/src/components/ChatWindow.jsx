@@ -68,7 +68,9 @@ export default function ChatWindow() {
         style={{
           display: "flex",
           flexDirection: "column",
-          flex: 1,
+          // justifyContent: "flex-start",
+          padding: "0.25rem",
+          // flex: 1,
           overflowY: "auto",
         }}
       >

@@ -21,7 +21,7 @@ function List() {
         minWidth: "min-content",
         overflowY: "auto",
         marginLeft: "0.1rem",
-        marginRight: "0.1rem",
+        marginRight: "0",
         marginTop: "0.5rem",
         marginBottom: "0.5rem",
       }}
