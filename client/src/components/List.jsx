@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import React, { useState } from "react";
 import ListCard from "./ListCard";
 
-function List() {
+function List(props) {
   const [cards, addCard] = useState([]);
   const [visible, setVisible] = useState(true);
 
@@ -14,6 +14,7 @@ function List() {
 
   return (
     <div
+      draggable
       className="list"
       style={{
         height: "min-content",
@@ -24,6 +25,7 @@ function List() {
         marginRight: "0",
         marginTop: "0.5rem",
         marginBottom: "0.5rem",
+        paddingBottom: "0.5rem",
       }}
     >
       {visible && (
@@ -45,7 +47,10 @@ function List() {
           <TextField
             variant="standard"
             placeholder="List title"
-            sx={{ backgroundColor: "transparent", padding: 1 }}
+            sx={{
+              backgroundColor: "transparent",
+              padding: 1,
+            }}
           ></TextField>
           {cards}
 

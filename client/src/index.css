@@ -1,9 +1,10 @@
 * {
   transition: all 200ms;
+  font-family: "Atkinson Hyperlegible", Roboto, sans-serif;
 }
 
 body {
-  background-color: #303030;
+  background-color: #eaeaea;
   margin: 0;
   padding: 8px;
   width: 100%;
@@ -15,6 +16,10 @@ div {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+aside {
+  box-shadow: 1rem; /* TODO: Make the chat window cast a shadow to the left onto the board  */
 }
 
 :root {

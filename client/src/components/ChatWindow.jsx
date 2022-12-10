@@ -95,7 +95,7 @@ export default function ChatWindow() {
           InputProps={{
             "aria-label": "Write your message",
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position="start">
                 <IconButton
                   id="input-button"
                   title="IconButton"

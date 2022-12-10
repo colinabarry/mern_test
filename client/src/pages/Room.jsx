@@ -24,7 +24,7 @@ export default function Room() {
     >
       <section
         style={{
-          background: "green",
+          background: "#eaeaea",
           width: `calc(100% - var(--aside-width))`,
           display: "flex",
           flexDirection: "row",
@@ -36,9 +36,10 @@ export default function Room() {
       </section>
       <aside
         style={{
-          background: "blue",
+          background: "#cccccc",
           width: `var(--aside-width)`,
           borderRadius: "0.5rem",
+          boxShadow: 10,
         }}
       >
         <ChatWindow />
