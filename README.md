@@ -2,7 +2,7 @@
 
 A test app to learn how to use MERN stack for real-time web app development.
 <br>
-Based on [this video tutorial](https://www.youtube.com/watch?v=sxfnT36v7Uk&t=11s).
+Based on [this video tutorial](https://www.youtube.com/watch?v=sxfnT36v7Uk).
 <br>
 
 # How to Use
@@ -10,12 +10,12 @@ Based on [this video tutorial](https://www.youtube.com/watch?v=sxfnT36v7Uk&t=11s
 ## Run the server:
 
 1. Open a terminal and navigate to `server` folder
-2. Run the command `npm run start`
+2. Run the command `npm start`
 
 ## Run the client:
 
 1. Open a terminal and navigate to `client` folder
-2. Run the command `npm run start`
+2. Run the command `npm start`
 3. A browser window should open to `localhost:3000`
 4. Press `F12` to open developer tools. ALternatively, right-click->"inspect" and navigate to "console" tab
 
