@@ -1,7 +1,8 @@
-import { Button, TextField } from "@mui/material";
+import { Button, colors, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import React, { useState } from "react";
 import ListCard from "./ListCard";
+import { COLORS } from "../values/colors";
 
 function List(props) {
   const [cards, addCard] = useState([]);
@@ -34,6 +35,7 @@ function List(props) {
             if (e.detail == 2) setVisible((prev) => !prev);
           }}
           sx={{
+            background: COLORS.secondary,
             display: "flex",
             flexDirection: "column",
             width: "200pt",
@@ -47,8 +49,10 @@ function List(props) {
           <TextField
             variant="standard"
             placeholder="List title"
+            inputProps={{
+              style: { fontWeight: "bold", textAlign: "center" },
+            }}
             sx={{
-              backgroundColor: "transparent",
               padding: 1,
             }}
           ></TextField>

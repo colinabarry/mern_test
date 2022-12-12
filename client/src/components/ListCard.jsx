@@ -1,6 +1,6 @@
 import { Card, TextField } from "@mui/material";
 import React, { useState } from "react";
-// import
+import { COLORS } from "../values/colors";
 
 function ListCard(props) {
   const [visible, setVisible] = useState(true);
@@ -17,13 +17,14 @@ function ListCard(props) {
         <Card
           onClick={(e) => {
             e.stopPropagation();
-            if (e.detail == 2) setVisible((prev) => !prev);
+            if (e.detail === 2) setVisible((prev) => !prev);
           }}
           sx={{
             margin: 0.5,
             marginLeft: 1,
             marginRight: 1,
-            backgroundColor: `${color}`,
+            // backgroundColor: `${color}`,
+            backgroundColor: COLORS.primary,
             color: "white",
             padding: 1,
             borderRadius: 1.5,
@@ -34,9 +35,11 @@ function ListCard(props) {
             variant="standard"
             multiline
             placeholder="Card title"
-            style={{
+            inputProps={{ style: { color: `${COLORS.text}` } }}
+            // color="white"
+            sx={{
               backgroundColor: "transparent",
-              color: "white",
+              // color: "white",
               padding: 0,
             }}
             value={props.name}

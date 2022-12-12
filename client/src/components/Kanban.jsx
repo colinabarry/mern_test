@@ -20,7 +20,7 @@ export default function Kanban() {
         style={{
           height: "min-content",
           width: "max-content",
-          background: "#FFFFFF",
+          // background: "#FFFFFF",
           marginLeft: "0rem",
           marginRight: ".5rem",
           marginTop: ".5rem",

@@ -1,4 +1,4 @@
-import { InputLabel } from "@mui/material";
+import { Input, InputLabel } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import SvgIcon from "@mui/material/SvgIcon";
@@ -6,6 +6,8 @@ import TextField from "@mui/material/TextField";
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import ChatMessage from "./ChatMessage";
+import { COLORS } from "../values/colors";
+import { BorderClear } from "@mui/icons-material";
 
 function SendIcon(props) {
   return (
@@ -61,16 +63,21 @@ export default function ChatWindow() {
   return (
     <div
       id="chat-window"
-      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+      style={{
+        // background: "green",
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
       <div
         id="show-messages"
         style={{
           display: "flex",
           flexDirection: "column",
-          // justifyContent: "flex-start",
+          maxWidth: "100%",
           padding: "0.25rem",
-          // flex: 1,
           overflowY: "auto",
         }}
       >
@@ -79,34 +86,59 @@ export default function ChatWindow() {
         ))}
       </div>
 
-      <form component="form" onSubmit={handleForm}>
+      <form
+        component="form"
+        onSubmit={handleForm}
+        style={{ width: "100%", display: "flex" }}
+      >
         {typing && (
           <InputLabel shrink htmlFor="message-input">
             Typing...
           </InputLabel>
         )}
-        <TextField
-          fullWidth
+        <Input
+          // fullWidth
+          // multiline
+          // variant="standard"
           id="message-input"
           value={message}
           placeholder="Write your message"
           onChange={handleInput}
-          style={{ borderRadius: "2rem" }}
-          InputProps={{
-            "aria-label": "Write your message",
-            endAdornment: (
-              <InputAdornment position="start">
-                <IconButton
-                  id="input-button"
-                  title="IconButton"
-                  type="submit"
-                  edge="end"
-                >
-                  <SendIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                id="input-button"
+                title="IconButton"
+                type="submit"
+                // edge="end"
+              >
+                <SendIcon />
+              </IconButton>
+            </InputAdornment>
+          }
+          sx={
+            {
+              // width: "100%",
+              // width: "max-content",
+              // margin: "1rem 1rem 1rem 1rem",
+              // maxHeight: "2rem",
+            }
+          }
+          // InputProps={{
+          //   // "aria-label": "Write your message",
+          //   endAdornment: (
+          //     <InputAdornment position="end">
+          //       <IconButton
+          //         id="input-button"
+          //         title="IconButton"
+          //         type="submit"
+          //         edge="end"
+          //       >
+          //         <SendIcon />
+          //       </IconButton>
+          //     </InputAdornment>
+          //   ),
+          // }}
         />
       </form>
     </div>

@@ -1,8 +1,8 @@
-import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import ChatWindow from "../components/ChatWindow";
 import Kanban from "../components/Kanban";
+import { COLORS } from "../values/colors";
 
 export default function Room() {
   const params = useParams();
@@ -24,7 +24,8 @@ export default function Room() {
     >
       <section
         style={{
-          background: "#eaeaea",
+          background: COLORS.primary,
+          // background: "#eaeaea",
           width: `calc(100% - var(--aside-width))`,
           display: "flex",
           flexDirection: "row",
@@ -36,10 +37,10 @@ export default function Room() {
       </section>
       <aside
         style={{
-          background: "#cccccc",
+          background: `${COLORS.accent}`,
           width: `var(--aside-width)`,
           borderRadius: "0.5rem",
-          boxShadow: 10,
+          boxShadow: "-2rem 0 2rem -1.5rem #00000055",
         }}
       >
         <ChatWindow />
