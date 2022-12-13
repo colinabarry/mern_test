@@ -50,9 +50,10 @@ function List(props) {
       >
         {editingTitle ? (
           <TextField
-            ref={(x) => (this.textField = x)}
             variant="standard"
             placeholder="List title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             onBlur={() => setEditingTitle((prev) => !prev)}
             inputProps={{
               style: {
@@ -67,10 +68,12 @@ function List(props) {
           ></TextField>
         ) : (
           <div
-            onClick={() => {
-              setEditingTitle((prev) => !prev);
-              this.textField.focus();
+            style={{
+              alignSelf: "center",
+              fontWeight: "bold",
+              fontSize: "1.5rem",
             }}
+            onClick={() => setEditingTitle((prev) => !prev)}
           >
             {title}
           </div>
