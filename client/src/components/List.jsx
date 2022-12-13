@@ -50,7 +50,11 @@ function List(props) {
             variant="standard"
             placeholder="List title"
             inputProps={{
-              style: { fontWeight: "bold", textAlign: "center" },
+              style: {
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                textAlign: "center",
+              },
             }}
             sx={{
               padding: 1,

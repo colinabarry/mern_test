@@ -2,9 +2,15 @@ import { v4 as uuidv4 } from "uuid";
 // trying to make a backend representation of everything so straightforward a monke could understand it
 export class Model {}
 
+export class User {
+  username;
+  password;
+}
+
 export class Board {
   title;
   lists = [];
+  messages = [];
   metadata;
 
   constructor() {
@@ -24,7 +30,6 @@ export class Board {
 
 export class List {
   title;
-  id;
   cards = [];
   metadata;
 

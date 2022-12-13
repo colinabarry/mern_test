@@ -24,7 +24,7 @@ function ListCard(props) {
             marginLeft: 1,
             marginRight: 1,
             // backgroundColor: `${color}`,
-            backgroundColor: COLORS.primary,
+            backgroundColor: COLORS.text,
             color: "white",
             padding: 1,
             borderRadius: 1.5,
@@ -35,7 +35,7 @@ function ListCard(props) {
             variant="standard"
             multiline
             placeholder="Card title"
-            inputProps={{ style: { color: `${COLORS.text}` } }}
+            inputProps={{ style: { color: "black" } }}
             // color="white"
             sx={{
               backgroundColor: "transparent",
