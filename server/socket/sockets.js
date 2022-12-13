@@ -13,11 +13,13 @@ const sockets = (socket) => {
 
   socket.on("typing-stopped", typingController.typingStopped);
 
-  socket.on("join-room", ({ roomId /*, board*/ }) => {
+  socket.on("join-room", async ({ roomId }) => {
     console.log("Joining room ");
     socket.join(roomId);
 
-    let board = getBoard(roomId);
+    let board = await getBoard(roomId);
+    console.log("from socket.js: board = ", board);
+    socket.emit("room-joined", board);
 
     // if (board == null) {
     //   console.log("null board");

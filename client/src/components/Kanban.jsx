@@ -22,6 +22,11 @@ export default function Kanban() {
   useEffect(() => {
     if (!socket) return;
 
+    socket.on("room-joined", (board) => {
+      // console.log(board);
+      setLists(board.lists);
+    });
+
     socket.on("list-created", (updatedLists) => {
       setLists(updatedLists);
     });

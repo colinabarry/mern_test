@@ -3,10 +3,13 @@ import Card from "@mui/material/Card";
 import React, { useState } from "react";
 import ListCard from "./ListCard";
 import { COLORS } from "../values/colors";
+import { Label } from "@mui/icons-material";
 
 function List(props) {
   const [cards, addCard] = useState([]);
   const [visible, setVisible] = useState(true);
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [title, setTitle] = useState("List Title");
 
   function createCard() {
     addCard((prev) => [...prev, <ListCard />]);
@@ -29,26 +32,28 @@ function List(props) {
         paddingBottom: "0.5rem",
       }}
     >
-      {visible && (
-        <Card
-          onClick={(e) => {
-            if (e.detail == 2) setVisible((prev) => !prev);
-          }}
-          sx={{
-            background: COLORS.secondary,
-            display: "flex",
-            flexDirection: "column",
-            width: "200pt",
-            paddingTop: 1,
-            marginLeft: 1,
-            marginRight: 1,
-            borderRadius: 2,
-            // overflowY: "scroll",
-          }}
-        >
+      <Card
+        onClick={(e) => {
+          if (e.detail == 2) setVisible((prev) => !prev);
+        }}
+        sx={{
+          background: COLORS.secondary,
+          display: "flex",
+          flexDirection: "column",
+          width: "200pt",
+          paddingTop: 1,
+          marginLeft: 1,
+          marginRight: 1,
+          borderRadius: 2,
+          // overflowY: "scroll",
+        }}
+      >
+        {editingTitle ? (
           <TextField
+            ref={(x) => (this.textField = x)}
             variant="standard"
             placeholder="List title"
+            onBlur={() => setEditingTitle((prev) => !prev)}
             inputProps={{
               style: {
                 fontSize: "1.5rem",
@@ -60,14 +65,21 @@ function List(props) {
               padding: 1,
             }}
           ></TextField>
-          {cards}
-
-          <Button onClick={createCard} sx={{ marginTop: 1 }}>
-            New Card
-          </Button>
-        </Card>
-        // </Container>
-      )}
+        ) : (
+          <div
+            onClick={() => {
+              setEditingTitle((prev) => !prev);
+              this.textField.focus();
+            }}
+          >
+            {title}
+          </div>
+        )}
+        {cards}
+        <Button onClick={createCard} sx={{ marginTop: 1 }}>
+          New Card
+        </Button>
+      </Card>
     </div>
   );
 }

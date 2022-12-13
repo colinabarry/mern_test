@@ -4,8 +4,6 @@ import ChatWindow from "../components/ChatWindow";
 import Kanban from "../components/Kanban";
 import { COLORS } from "../values/colors";
 
-// let board = null;
-
 export default function Room() {
   const params = useParams();
   const { socket } = useOutletContext();
@@ -13,7 +11,7 @@ export default function Room() {
   useEffect(() => {
     if (!socket) return;
 
-    socket.emit("join-room", { roomId: params.roomId /*, board: board*/ });
+    socket.emit("join-room", { roomId: params.roomId });
 
     socket.on("create-board", (newBoard) => {
       // board = newBoard;

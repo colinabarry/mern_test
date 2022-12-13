@@ -49,7 +49,7 @@ const boardSchema = new mongoose.Schema({
   metadata: metadataSchema,
 });
 
-// !----------------------------- Models -----------------------------! //
+// !------------------------------- Models -------------------------------! //
 const User = mongoose.model("User", userSchema);
 
 const Board = mongoose.model("Board", boardSchema);
@@ -58,6 +58,7 @@ const List = mongoose.model("List", listSchema);
 
 const Metadata = mongoose.model("Metadata", metadataSchema);
 
+// !------------------------------ Functions ------------------------------! //
 export async function getBoard(boardId) {
   const board = await Board.findById(
     boardId.replace(/-/g, "").substring(0, 24)
@@ -68,8 +69,7 @@ export async function getBoard(boardId) {
 export async function addBoard(userId, roomId) {
   const board = new Board();
   board._id = roomId.replace(/-/g, "").substring(0, 24); // ! this is bad!!! It's cutting characters off the end of the uuid of the room because _id needs to be 24 chars. Look for alternative OR find 24char uuid generator for room
-  // console.log(board);
-  // board.metadata.createdByUser = User.findById(userId);
+  board.metadata.createdByUser = User.findById(userId);
   await board.save();
   return board;
 }
