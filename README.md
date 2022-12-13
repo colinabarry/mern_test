@@ -7,6 +7,12 @@ Based on [this video tutorial](https://www.youtube.com/watch?v=sxfnT36v7Uk).
 
 # How to Use
 
+## Install Dependencies (Do Once)
+
+1. Make sure Node.js is isntalled
+2. Open a terminal in `server` and run the command `npm install`
+3. Open a terminal in `client` and run the command `npm install`
+
 ## Run the server:
 
 1. Open a terminal and navigate to `server` folder
