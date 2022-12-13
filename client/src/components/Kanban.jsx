@@ -1,34 +1,42 @@
 import React, { useEffect, useState } from "react";
-// import List from "../components/List";
-import { Button } from "@mui/material";
+import { Button, listClasses } from "@mui/material";
 import { useOutletContext } from "react-router-dom";
+import List from "./List";
+
+// let lists = [];
 
 export default function Kanban() {
   const { socket } = useOutletContext();
+  const [lists, setLists] = useState([]);
   // const [lists, addList] = useState([
   //   <List cardNames={["hi", "hey"]} />,
   //   <List />,
   //   <List />,
   // ]);
-  const lists = [];
 
   function createList() {
-    socket.emit("create-list");
+    socket.emit("create-list", "6d82e764dda5430e8cebcfe0");
     // addList((prev) => [...prev, <List cardNames={[]} />]);
   }
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("list-updated", (data) => {
-      console.log("list-updated");
-      lists = data.lists;
+    socket.on("list-created", (updatedLists) => {
+      setLists(updatedLists);
     });
+
+    // socket.on("list-updated", (data) => {
+    //   console.log("list-updated");
+    //   lists = data.lists;
+    // });
   }, [socket]);
 
   return (
     <div style={{ flexDirection: "row" }}>
-      {lists}
+      {lists.map((list) => (
+        <List />
+      ))}
       <Button
         style={{
           height: "min-content",
