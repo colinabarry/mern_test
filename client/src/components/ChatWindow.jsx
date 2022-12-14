@@ -82,14 +82,14 @@ export default function ChatWindow() {
         }}
       >
         {chat.map((message) => (
-          <ChatMessage message={message} />
+          <ChatMessage key={message} message={message} />
         ))}
       </div>
 
       <form
         component="form"
         onSubmit={handleForm}
-        style={{ width: "100%", display: "flex" }}
+        style={{ width: "100%" /*, display: "flex" */ }}
       >
         {typing && (
           <InputLabel shrink htmlFor="message-input">
@@ -97,23 +97,22 @@ export default function ChatWindow() {
           </InputLabel>
         )}
         <Input
-          // fullWidth
+          fullWidth
           // multiline
-          // variant="standard"
           id="message-input"
           value={message}
           placeholder="Write your message"
           onChange={handleInput}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton
+              {/* <IconButton
                 id="input-button"
                 title="IconButton"
                 type="submit"
                 // edge="end"
               >
                 <SendIcon />
-              </IconButton>
+               </IconButton> */}
             </InputAdornment>
           }
           sx={

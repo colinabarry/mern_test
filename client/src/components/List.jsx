@@ -1,24 +1,55 @@
 import { Button, colors, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListCard from "./ListCard";
 import { COLORS } from "../values/colors";
-import { Label } from "@mui/icons-material";
+import { useOutletContext } from "react-router-dom";
+import { useRef } from "react";
 
-function List(props) {
-  const [cards, addCard] = useState([]);
-  const [visible, setVisible] = useState(true);
+export default function List(props) {
+  // const [cards, addCard] = useState([]);
+  // const [visible, setVisible] = useState(true);
+  const { socket } = useOutletContext();
   const [editingTitle, setEditingTitle] = useState(false);
   const [title, setTitle] = useState("List Title");
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    setCards(props.data.cards);
+    console.log(props.data);
+
+    socket.on("room-joined", (updatedBoard) => {
+      props.data.cards.length
+        ? setCards(props.data.cards)
+        : setCards([<div />]);
+      console.log("updatedBoard: ", updatedBoard);
+    });
+
+    socket.on("card-created", (updatedCards) => {
+      updatedCards.length ? setCards(updatedCards) : setCards([<div />]);
+      console.log(cards);
+    });
+  }, [socket]);
 
   function createCard() {
-    addCard((prev) => [...prev, <ListCard />]);
-    console.log(cards);
+    socket.emit("create-card", {
+      listId: props.data._id,
+      boardId: "6d82e764dda5430e8cebcfe0",
+    });
+    // addCard((prev) => [...prev, <ListCard />]);
+    // console.log(cards);
+  }
+
+  function handleTitleBlur(e) {
+    if (e.target.value == "") setTitle("List Title");
+    setEditingTitle((prev) => !prev);
   }
 
   return (
     <div
-      draggable
+      draggable={editingTitle ? false : true}
       className="list"
       style={{
         height: "min-content",
@@ -33,9 +64,9 @@ function List(props) {
       }}
     >
       <Card
-        onClick={(e) => {
-          if (e.detail == 2) setVisible((prev) => !prev);
-        }}
+        // onClick={(e) => {
+        // if (e.detail == 2) setVisible((prev) => !prev);
+        // }}
         sx={{
           background: COLORS.secondary,
           display: "flex",
@@ -50,16 +81,18 @@ function List(props) {
       >
         {editingTitle ? (
           <TextField
-            variant="standard"
+            autoFocus
+            variant="outlined"
             placeholder="List title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            onBlur={() => setEditingTitle((prev) => !prev)}
+            onBlur={(e) => handleTitleBlur(e)}
             inputProps={{
               style: {
                 fontSize: "1.5rem",
                 fontWeight: "bold",
                 textAlign: "center",
+                maxHeight: "0.5rem",
               },
             }}
             sx={{
@@ -69,16 +102,18 @@ function List(props) {
         ) : (
           <div
             style={{
-              alignSelf: "center",
-              fontWeight: "bold",
               fontSize: "1.5rem",
+              fontWeight: "bold",
+              alignSelf: "center",
             }}
             onClick={() => setEditingTitle((prev) => !prev)}
           >
             {title}
           </div>
         )}
-        {cards}
+        {cards.map((card) => (
+          <Card key={card._id} data={card} />
+        ))}
         <Button onClick={createCard} sx={{ marginTop: 1 }}>
           New Card
         </Button>
@@ -86,5 +121,3 @@ function List(props) {
     </div>
   );
 }
-
-export default List;

@@ -1,5 +1,5 @@
 import TypingController from "./controllers/TypingController.js";
-import { getBoard, addBoard, addList } from "../dbController.js";
+import { getBoard, addBoard, addList, addCard } from "../dbController.js";
 
 const sockets = (socket) => {
   const typingController = new TypingController(socket);
@@ -18,7 +18,7 @@ const sockets = (socket) => {
     socket.join(roomId);
 
     let board = await getBoard(roomId);
-    console.log("from socket.js: board = ", board);
+    // console.log("from socket.js: board = ", board);
     socket.emit("room-joined", board);
 
     // if (board == null) {
@@ -33,9 +33,17 @@ const sockets = (socket) => {
 
   socket.on("create-list", async (boardId) => {
     const lists = await addList(boardId);
+    socket.emit("board-updated", await getBoard(boardId));
     socket.emit("list-created", lists);
     // console.log(lists);
     console.log("create list!");
+  });
+
+  socket.on("create-card", async ({ listId, boardId }) => {
+    // console.log("boardId: ", boardId);
+    const cards = await addCard(listId, boardId);
+    console.log(cards);
+    socket.emit("card-created", cards);
   });
 };
 

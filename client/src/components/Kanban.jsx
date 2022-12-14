@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, listClasses } from "@mui/material";
+import { Button } from "@mui/material";
 import { useOutletContext } from "react-router-dom";
 import List from "./List";
 
@@ -7,6 +7,7 @@ import List from "./List";
 
 export default function Kanban() {
   const { socket } = useOutletContext();
+  const [board, setBoard] = useState({});
   const [lists, setLists] = useState([]);
   // const [lists, addList] = useState([
   //   <List cardNames={["hi", "hey"]} />,
@@ -22,10 +23,15 @@ export default function Kanban() {
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("room-joined", (board) => {
+    socket.on("room-joined", (updatedBoard) => {
       // console.log(board);
-      setLists(board.lists);
+      setLists(updatedBoard.lists);
+      // setBoard(updatedBoard);
     });
+
+    // socket.on("board-updated", (updatedBoard) => {
+    // setBoard(updatedBoard);
+    // });
 
     socket.on("list-created", (updatedLists) => {
       setLists(updatedLists);
@@ -39,8 +45,10 @@ export default function Kanban() {
 
   return (
     <div style={{ flexDirection: "row" }}>
-      {lists.map((list) => (
-        <List />
+      {/* {console.log("lists: ", lists)} */}
+      {/* {console.log("board: ", board)} */}
+      {lists.flatMap((list) => (
+        <List key={list._id} data={list.cards} />
       ))}
       <Button
         style={{

@@ -56,6 +56,8 @@ const Board = mongoose.model("Board", boardSchema);
 
 const List = mongoose.model("List", listSchema);
 
+const Card = mongoose.model("Card", cardSchema);
+
 const Metadata = mongoose.model("Metadata", metadataSchema);
 
 // !------------------------------ Functions ------------------------------! //
@@ -64,6 +66,13 @@ export async function getBoard(boardId) {
     boardId.replace(/-/g, "").substring(0, 24)
   );
   return board;
+}
+
+export async function getList(listId, boardId) {
+  const board = await getBoard(boardId);
+  const list = board.lists.filter((list) => list._id == listId);
+
+  return list;
 }
 
 export async function addBoard(userId, roomId) {
@@ -75,12 +84,20 @@ export async function addBoard(userId, roomId) {
 }
 
 export async function addList(boardId) {
-  const board = await getBoard(boardId);
+  const board = await getBoard(boardId.replace(/-/g, "").substring(0, 24));
   const newList = new List();
-  // console.log(board);
 
   board.lists.push(newList);
   await board.save();
-  // console.log(board.lists);
   return board.lists;
+}
+
+export async function addCard(listId, boardId) {
+  const board = await getBoard(boardId);
+  const list = board.lists.filter((list) => list._id == listId)[0];
+  const newCard = new Card();
+  list.cards.push(newCard);
+
+  await board.save();
+  return list.cards;
 }
