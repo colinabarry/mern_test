@@ -2,6 +2,9 @@
   transition: all 200ms;
   font-family: "Atkinson Hyperlegible", Roboto, sans-serif;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 
 body {
   background-color: #61764b;
@@ -16,10 +19,6 @@ div {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-aside {
-  box-shadow: 1rem; /* TODO: Make the chat window cast a shadow to the left onto the board  */
 }
 
 :root {

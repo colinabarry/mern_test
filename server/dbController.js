@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+mongoose.set("strictQuery", false);
+
 mongoose.connect(
   "mongodb+srv://admin:admin123@cluster0.yojgc.mongodb.net/SWENG411_ProjectCORE?retryWrites=true&w=majority"
 );
@@ -70,7 +72,7 @@ export async function getBoard(boardId) {
 
 export async function getList(listId, boardId) {
   const board = await getBoard(boardId);
-  const list = board.lists.filter((list) => list._id == listId);
+  const list = board.lists.filter((list) => list._id == listId)[0];
 
   return list;
 }

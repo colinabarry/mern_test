@@ -82,7 +82,7 @@ export default function ChatWindow() {
         }}
       >
         {chat.map((message) => (
-          <ChatMessage key={message} message={message} />
+          <ChatMessage key={message.message} message={message} />
         ))}
       </div>
 
@@ -96,48 +96,24 @@ export default function ChatWindow() {
             Typing...
           </InputLabel>
         )}
-        <Input
+        <TextField
           fullWidth
-          // multiline
+          variant="filled"
           id="message-input"
           value={message}
-          placeholder="Write your message"
+          label="Write a message"
+          // placeholder="Write your message"
           onChange={handleInput}
-          endAdornment={
-            <InputAdornment position="end">
-              {/* <IconButton
-                id="input-button"
-                title="IconButton"
-                type="submit"
-                // edge="end"
-              >
-                <SendIcon />
-               </IconButton> */}
-            </InputAdornment>
-          }
-          sx={
-            {
-              // width: "100%",
-              // width: "max-content",
-              // margin: "1rem 1rem 1rem 1rem",
-              // maxHeight: "2rem",
-            }
-          }
-          // InputProps={{
-          //   // "aria-label": "Write your message",
-          //   endAdornment: (
-          //     <InputAdornment position="end">
-          //       <IconButton
-          //         id="input-button"
-          //         title="IconButton"
-          //         type="submit"
-          //         edge="end"
-          //       >
-          //         <SendIcon />
-          //       </IconButton>
-          //     </InputAdornment>
-          //   ),
-          // }}
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              paddingLeft: "0.75rem",
+              paddingRight: "0.75rem",
+              color: `${COLORS.text}`,
+              borderRadius: "0.5rem",
+            },
+          }}
+          // sx={{}}
         />
       </form>
     </div>

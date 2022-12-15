@@ -12,12 +12,7 @@ export default function Room() {
     if (!socket) return;
 
     socket.emit("join-room", { roomId: params.roomId });
-
-    socket.on("create-board", (newBoard) => {
-      // board = newBoard;
-      // console.log("board = ", board);
-    });
-  }, [socket]);
+  }, [socket, params.roomId]);
 
   return (
     <main
@@ -30,9 +25,9 @@ export default function Room() {
       <section
         style={{
           background: COLORS.primary,
-          // background: "#eaeaea",
           width: `calc(100% - var(--aside-width))`,
           display: "flex",
+          maxHeight: "100%",
           flexDirection: "row",
           overflowX: "auto",
           overflowY: "auto",
@@ -42,10 +37,10 @@ export default function Room() {
       </section>
       <aside
         style={{
-          background: `${COLORS.accent}`,
+          background: `${COLORS.accent2}`,
           width: `var(--aside-width)`,
           borderRadius: "0.5rem",
-          boxShadow: "-2rem 0 2rem -1.5rem #00000055",
+          boxShadow: "-1rem 0 2rem 0 #00000077",
         }}
       >
         <ChatWindow />

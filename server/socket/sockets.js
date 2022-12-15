@@ -1,5 +1,11 @@
 import TypingController from "./controllers/TypingController.js";
-import { getBoard, addBoard, addList, addCard } from "../dbController.js";
+import {
+  getBoard,
+  addBoard,
+  addList,
+  addCard,
+  getList,
+} from "../dbController.js";
 
 const sockets = (socket) => {
   const typingController = new TypingController(socket);
@@ -14,36 +20,27 @@ const sockets = (socket) => {
   socket.on("typing-stopped", typingController.typingStopped);
 
   socket.on("join-room", async ({ roomId }) => {
-    console.log("Joining room ");
     socket.join(roomId);
 
     let board = await getBoard(roomId);
-    // console.log("from socket.js: board = ", board);
     socket.emit("room-joined", board);
-
-    // if (board == null) {
-    //   console.log("null board");
-    //   socket.emit("create-board", addBoard("6398ba84c89556f8df03179c", roomId));
-    // }
   });
 
-  socket.on("disconnect", (socket) => {
-    console.log("User left.");
-  });
+  // socket.on("disconnect", (socket) => {
+  //   // console.log("User left.");
+  // });
 
   socket.on("create-list", async (boardId) => {
     const lists = await addList(boardId);
     socket.emit("board-updated", await getBoard(boardId));
     socket.emit("list-created", lists);
-    // console.log(lists);
     console.log("create list!");
   });
 
   socket.on("create-card", async ({ listId, boardId }) => {
-    // console.log("boardId: ", boardId);
     const cards = await addCard(listId, boardId);
-    console.log(cards);
-    socket.emit("card-created", cards);
+    const list = await getList(listId, boardId);
+    socket.emit("card-created", list);
   });
 };
 

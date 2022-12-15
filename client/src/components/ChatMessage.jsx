@@ -1,5 +1,6 @@
 import { Card, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { COLORS } from "../values/colors";
 
 function ChatMessage(props) {
   const [visible, setVisible] = useState(true);
@@ -18,29 +19,27 @@ function ChatMessage(props) {
         maxWidth: "100%",
       }}
     >
-      {visible && (
-        // <Typography style={{ width: "100%" }} key={props.message.message}>
-        <Card
-          onClick={() => {
-            setVisible((prev) => !prev);
-          }}
-          style={{
-            background: props.message.recieved ? "powderblue" : "white",
-            width: "max-content",
-            maxWidth: "70%",
-            display: "flex",
-            flexDirection: "column",
-            marginLeft: "0.5rem",
-            marginRight: "0.5rem",
-            paddingTop: "0.25rem",
-            paddingLeft: "0.25rem",
-            paddingRight: "0.25rem",
-          }}
-        >
-          {props.message.message}
-        </Card>
-        // </Typography>
-      )}
+      <Card
+        onClick={() => {
+          setVisible((prev) => !prev);
+        }}
+        style={{
+          background: props.message.recieved
+            ? `${COLORS.secondary}`
+            : `${COLORS.accent}`,
+          width: "max-content",
+          maxWidth: "70%",
+          display: "flex",
+          flexDirection: "column",
+          marginLeft: "0.5rem",
+          marginRight: "0.5rem",
+          paddingTop: "0.25rem",
+          paddingLeft: "0.25rem",
+          paddingRight: "0.25rem",
+        }}
+      >
+        {props.message.message}
+      </Card>
     </div>
   );
 }
